@@ -82,5 +82,69 @@ namespace CPMSDAL
                 conn.Dispose();
             }
         }
+        public int DeleteAdmin(AdminDBModel _dbModel)
+        {
+            SqlConnection conn = new SqlConnection(DBConnection.GetConnection());
+            conn.Open();
+            SqlCommand dCmd = new SqlCommand("SP_SET_TBL_ADMIN", conn);
+            dCmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                dCmd.Parameters.AddWithValue("@AdminID", _dbModel.AdminID);
+                dCmd.Parameters.AddWithValue("@QryOption", 5);
+                return dCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //UtilityOptions.ErrorLog(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                throw ex;
+            }
+            finally
+            {
+                dCmd.Dispose();
+                conn.Close();
+                conn.Dispose();
+            }
+        }
+        public List<AdminDBModel> LoadSelectedAdmin(AdminDBModel _dbModel)
+        {
+            List<AdminDBModel> _modelList = new List<AdminDBModel>();
+            SqlConnection conn = new SqlConnection(DBConnection.GetConnection());
+            conn.Open();
+            SqlCommand dAd = new SqlCommand("SP_SET_TBL_ADMIN", conn);
+            SqlDataAdapter sda = new SqlDataAdapter(dAd);
+            dAd.CommandType = CommandType.StoredProcedure;
+            dAd.Parameters.AddWithValue("AdminID", _dbModel.AdminID);
+            dAd.Parameters.AddWithValue("@QryOption", 4);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    _modelList = (from DataRow row in dt.Rows
+                                  select new AdminDBModel
+                                  {
+                                      AdminID = Convert.ToInt32(row["AdminID"].ToString()),
+                                      Name = row["Name"].ToString(),
+                                      Contact = row["Contact"].ToString(),
+                                      Address = row["Address"].ToString(),
+                                  }).ToList();
+                }
+                return _modelList;
+            }
+            catch (Exception ex)
+            {
+                //UtilityOptions.ErrorLog(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                throw ex;
+            }
+            finally
+            {
+                dt.Dispose();
+                dAd.Dispose();
+                conn.Close();
+                conn.Dispose();
+            }
+        }
     }
 }

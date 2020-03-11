@@ -35,5 +35,24 @@ namespace CPMSwebApp.Controllers
             _dbModelList = objList.LoadAllAdmin();
             return this.Json(_dbModelList, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult DeleteAdmin(AdminDBModel _dbModel)
+        {
+            int _result = 0;
+            objList = new AdminList();
+            _result = objList.DeleteAdmin(_dbModel);
+            if (_result > 0)
+                return Json(new { success = true });
+            else
+                return Json(new { success = false });
+        }
+        [HttpPost]
+        public JsonResult LoadSelectedAdmin(AdminDBModel _dbModel)
+        {
+            objList = new AdminList();
+            List<AdminDBModel> _dbModelList = new List<AdminDBModel>();
+            _dbModelList = objList.LoadSelectedAdmin(_dbModel);
+            return this.Json(_dbModelList, JsonRequestBehavior.AllowGet);
+        }
     }
 }
