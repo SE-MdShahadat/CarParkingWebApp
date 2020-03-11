@@ -10,14 +10,7 @@
         e.preventDefault();
         LoadGridData();
     });
-    $(document).delegate('#btnEdit', 'click', function (e) {
-        e.preventDefault();
-        LoadGridData();
-    });
-    //$(document).delegate('#btnDelete', 'click', function (e) {
-    //    e.preventDefault();
-    //    DeleteData(BuyerID)
-    //});
+    
     $(document).delegate('#btnAddNew', 'click', function (e) {
         e.preventDefault();
         ClearForm();
@@ -171,7 +164,7 @@ function SaveFormValue() {
     var _isError = 0;
     var AdminID = $("#hdAdminID").val();
     var Name = $("#txtName").val();
-    var contact = $("#txtcontact").val();
+    var contact = $("#txtContact").val();
     var Address = $("#txtAddress").val();
 
     if (_isError == 1) {
@@ -211,22 +204,11 @@ function LoadEditData(AdminID) {
         datatype: "json",
         success: function (data) {
             $.each(data, function (i, item) {
-                //$("#hdAdmin").val(item.BuyerID);
+                $("#hdAdminID").val(AdminID);
                 $("#txtName").val(item.Name);
                 $("#txtContact").val(item.Contact);
                 $("#txtAddress").val(item.Address);
-                //$("#txtName").val(item.BuyerName);
-                //$("#ddlCountryID").val(item.CountryID);
-                //$("#txtCMMargin").val(item.CMMargin);
-                //$("#txtAverageCM").val(item.AverageCM);
-                //$("#txtLeadTime").val(item.LeadTime);
-                //$("#txtExFactoryLead").val(item.ExFactoryLead);
-                //$("#txtPaymentDays").val(item.PaymentDays);
-                //$("#txtExcessShip").val(item.ExcessShipAllow);
-                //if (item.AdminID == true)
-                //    $("#chkIsProductIDAllow").prop("checked", true);
-                //else
-                //    $("#chkIsProductIDAllow").prop("checked", false);
+                
             });
             $("#modalAdmin").modal("toggle");
         }

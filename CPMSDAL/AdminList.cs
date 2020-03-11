@@ -22,7 +22,7 @@ namespace CPMSDAL
             {
                 dCmd.Parameters.AddWithValue("@AdminID", _dbModel.AdminID);
                 dCmd.Parameters.AddWithValue("@Name", _dbModel.Name);
-                dCmd.Parameters.AddWithValue("@contact", _dbModel.Contact);
+                dCmd.Parameters.AddWithValue("@Contact", _dbModel.Contact);
                 dCmd.Parameters.AddWithValue("@Address", _dbModel.Address);
                 dCmd.Parameters.AddWithValue("@AddedBy", 9);
                 if (_dbModel.AdminID > 0)
@@ -63,7 +63,7 @@ namespace CPMSDAL
                                   {
                                       AdminID = Convert.ToInt32(row["AdminID"].ToString()),
                                       Name = row["Name"].ToString(),
-                                      Contact = row["contact"].ToString(),
+                                      Contact = row["Contact"].ToString(),
                                       Address = row["Address"].ToString(),
                                   }).ToList();
                 }
