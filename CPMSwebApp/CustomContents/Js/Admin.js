@@ -13,6 +13,7 @@
     $(document).delegate('#ddlCountry', 'change', function (e) {
         e.preventDefault();
         var id = $("#ddlCountry").val();
+        LoadDDLCityData(id);
         alert(id);
     });
     
@@ -103,6 +104,25 @@ function LoadDDLMasterData() {
                 txt += '<option value="' + item.Code + '">' + item.Value+'</option>';
             });
             $("#ddlCountry").append(txt);
+        }
+    });
+}
+function LoadDDLCityData(CountryID) {
+    var _dbModel = { 'CountryID': CountryID };
+    $.ajax({
+        type: "POST",
+        url: "/Admin/LoadDDLCityData",
+        data: JSON.stringify(_dbModel),
+        contentType: "application/json",
+        datatype: "json",
+        success: function (data) {
+            $("#ddlCity").empty();
+            var txt = '';
+            txt += '<option value="-1">-- Select City --</option>';
+            $.each(data, function (i, item) {
+                txt += '<option value="' + item.Code + '">' + item.Value+'</option>';
+            });
+            $("#ddlCity").append(txt);
         }
     });
 }

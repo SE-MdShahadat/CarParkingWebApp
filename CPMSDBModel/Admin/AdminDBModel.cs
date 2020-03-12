@@ -15,7 +15,13 @@ namespace CPMSDBModel.Admin
     }
     public class DDLCountryDBModel
     {
-        public String Code { get; set; }
+        public string Code { get; set; }
         public string Value { get; set; }
+    }
+    public class DDLCityDBModel
+    {
+        public string Code { get; set; }
+        public string Value { get; set; }
+        public int CountryID { get; set; }
     }
 }
