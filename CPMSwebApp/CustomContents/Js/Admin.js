@@ -136,6 +136,8 @@ function BindGridDataManual(data) {
         '<th>Name</th>' +
         '<th>Contact</th>' +
         '<th>Address</th>' +
+        '<th>Country</th>' +
+        '<th>City</th>' +
         '<th>Action</th>' +
         '</tr>' +
         '</thead>' +
@@ -252,6 +254,7 @@ function LoadEditData(AdminID) {
                 $("#txtName").val(item.Name);
                 $("#txtContact").val(item.Contact);
                 $("#txtAddress").val(item.Address);
+                $("#txtCountry").val(item.CountryID);
                 
             });
             $("#modalAdmin").modal("toggle");
