@@ -13,4 +13,9 @@ namespace CPMSDBModel.Admin
         public string Contact { get; set; }
         public string Address { get; set; }
     }
+    public class DDLCountryDBModel
+    {
+        public String Code { get; set; }
+        public string Value { get; set; }
+    }
 }

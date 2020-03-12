@@ -35,6 +35,14 @@ namespace CPMSwebApp.Controllers
             _dbModelList = objList.LoadAllAdmin();
             return this.Json(_dbModelList, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult LoadDDLMasterData()
+        {
+            objList = new AdminList();
+            List<DDLCountryDBModel> _dbModelList = new List<DDLCountryDBModel>();
+            _dbModelList = objList.LoadDDLMasterData();
+            return this.Json(_dbModelList, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public JsonResult DeleteAdmin(AdminDBModel _dbModel)
         {

@@ -82,6 +82,43 @@ namespace CPMSDAL
                 conn.Dispose();
             }
         }
+        public List<DDLCountryDBModel> LoadDDLMasterData()
+        {
+            List<DDLCountryDBModel> _modelList = new List<DDLCountryDBModel>();
+            SqlConnection conn = new SqlConnection(DBConnection.GetConnection());
+            conn.Open();
+            SqlCommand dAd = new SqlCommand("SP_SET_TBL_ADMIN", conn);
+            SqlDataAdapter sda = new SqlDataAdapter(dAd);
+            dAd.CommandType = CommandType.StoredProcedure;
+            dAd.Parameters.AddWithValue("@QryOption", 6);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    _modelList = (from DataRow row in dt.Rows
+                                  select new DDLCountryDBModel
+                                  {
+                                      Code = row["Code"].ToString(),
+                                      Value = row["Value"].ToString(),
+                                  }).ToList();
+                }
+                return _modelList;
+            }
+            catch (Exception ex)
+            {
+                //UtilityOptions.ErrorLog(ex.ToString(), MethodBase.GetCurrentMethod().Name);
+                throw ex;
+            }
+            finally
+            {
+                dt.Dispose();
+                dAd.Dispose();
+                conn.Close();
+                conn.Dispose();
+            }
+        }
         public int DeleteAdmin(AdminDBModel _dbModel)
         {
             SqlConnection conn = new SqlConnection(DBConnection.GetConnection());

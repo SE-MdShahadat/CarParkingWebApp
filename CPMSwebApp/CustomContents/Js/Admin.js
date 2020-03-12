@@ -10,6 +10,11 @@
         e.preventDefault();
         LoadGridData();
     });
+    $(document).delegate('#ddlCountry', 'change', function (e) {
+        e.preventDefault();
+        var id = $("#ddlCountry").val();
+        alert(id);
+    });
     
     $(document).delegate('#btnAddNew', 'click', function (e) {
         e.preventDefault();
@@ -20,6 +25,7 @@
         e.preventDefault();
         ClearForm();
     });
+    LoadDDLMasterData();
     LoadGridData();
     //LoadCountryName();
 });
@@ -79,6 +85,24 @@ function LoadGridData() {
         success: function (data) {
             BindGridDataManual(data);
             //alert(data.length);
+        }
+    });
+}
+function LoadDDLMasterData() {
+    $.ajax({
+        type: "GET",
+        url: "/Admin/LoadDDLMasterData",
+        data: {},
+        contentType: "application/json",
+        datatype: "json",
+        success: function (data) {
+            $("#ddlCountry").empty();
+            var txt = '';
+            txt += '<option value="-1">--Select Country--</option>';
+            $.each(data, function (i, item) {
+                txt += '<option value="' + item.Code + '">' + item.Value+'</option>';
+            });
+            $("#ddlCountry").append(txt);
         }
     });
 }
@@ -264,4 +288,5 @@ function DeleteData(AdminID) {
 function ClearForm() {
     $("#hdAdminID").val("");
     $(".txt").val("");
+    $(".ddlMaster").val("-1");
 }
