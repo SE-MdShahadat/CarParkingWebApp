@@ -24,6 +24,8 @@ namespace CPMSDAL
                 dCmd.Parameters.AddWithValue("@Name", _dbModel.Name);
                 dCmd.Parameters.AddWithValue("@Contact", _dbModel.Contact);
                 dCmd.Parameters.AddWithValue("@Address", _dbModel.Address);
+                dCmd.Parameters.AddWithValue("@CountryID", _dbModel.Country);
+                dCmd.Parameters.AddWithValue("@CityID", _dbModel.City);
                 dCmd.Parameters.AddWithValue("@AddedBy", 9);
                 if (_dbModel.AdminID > 0)
                     dCmd.Parameters.AddWithValue("@QryOption", 2);

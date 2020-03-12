@@ -14,7 +14,7 @@
         e.preventDefault();
         var id = $("#ddlCountry").val();
         LoadDDLCityData(id);
-        alert(id);
+        //alert(id);
     });
     
     $(document).delegate('#btnAddNew', 'click', function (e) {
@@ -210,15 +210,19 @@ function SaveFormValue() {
     var _isError = 0;
     var AdminID = $("#hdAdminID").val();
     var Name = $("#txtName").val();
-    var contact = $("#txtContact").val();
+    var Contact = $("#txtContact").val();
     var Address = $("#txtAddress").val();
-
+    var Country = $("#ddlCountry").val();
+    var City = $("#ddlCity").val();
+    alert(Country);
+    alert(City);
     if (_isError == 1) {
         return false;
     }
     var _dbModel = {
-        'AdminID': AdminID, 'Name': Name, 'contact': contact, 'Address': Address,
+        'AdminID': AdminID, 'Name': Name, 'Contact': Contact, 'Address': Address, 'Country':Country, 'City': City,
     };
+    
     $.ajax({
         type: "POST",
         url: "/Admin/SaveAdmin",
