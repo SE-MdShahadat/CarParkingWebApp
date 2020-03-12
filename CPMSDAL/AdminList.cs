@@ -209,6 +209,8 @@ namespace CPMSDAL
                                       Name = row["Name"].ToString(),
                                       Contact = row["Contact"].ToString(),
                                       Address = row["Address"].ToString(),
+                                      City = row["CityID"].ToString(),
+                                      Country= row["CountryID"].ToString()
                                   }).ToList();
                 }
                 return _modelList;

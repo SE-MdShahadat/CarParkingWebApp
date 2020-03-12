@@ -126,7 +126,6 @@ function LoadDDLCityData(CountryID) {
         }
     });
 }
-
 function BindGridDataManual(data) {
     $("#tblAdmin").empty();
     var txt = '<table class="table table-bordered table-striped ">'+
@@ -205,7 +204,6 @@ function BindGridDataManual(data) {
 //        scrollable: true
 //    });
 //}
-
 function SaveFormValue() {
     var _isError = 0;
     var AdminID = $("#hdAdminID").val();
@@ -243,7 +241,6 @@ function SaveFormValue() {
         }
     });
 }
-
 function LoadEditData(AdminID) {
     var _dbModel = { 'AdminID': AdminID };
     $.ajax({
@@ -254,18 +251,20 @@ function LoadEditData(AdminID) {
         datatype: "json",
         success: function (data) {
             $.each(data, function (i, item) {
-                $("#hdAdminID").val(AdminID);
+                $("#hdAdminID").val(item.AdminID);
                 $("#txtName").val(item.Name);
                 $("#txtContact").val(item.Contact);
                 $("#txtAddress").val(item.Address);
-                $("#txtCountry").val(item.CountryID);
+                $("#ddlCountry").val(item.Country);
+                alert(item.Country);
+                LoadDDLCityData(item.Country);
+                
                 
             });
             $("#modalAdmin").modal("toggle");
         }
     });
 }
-
 //function DeleteGridData(BuyerID) {
 //    var ans = confirm("Are you sure to delete a record");
 //    if (ans == true) {
@@ -310,8 +309,6 @@ function DeleteData(AdminID) {
         });
     }
 }
-
-
 function ClearForm() {
     $("#hdAdminID").val("");
     $(".txt").val("");
