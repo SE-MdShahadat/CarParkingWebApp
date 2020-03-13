@@ -84,7 +84,8 @@ function LoadGridData() {
         contentType: "application/json",
         datatype: "json",
         success: function (data) {
-            BindGridDataManual(data);
+            //BindGridDataManual(data);
+            BindGridData(data);
             //alert(data.length);
         }
     });
@@ -115,6 +116,7 @@ function LoadDDLCityData(CountryID) {
         data: JSON.stringify(_dbModel),
         contentType: "application/json",
         datatype: "json",
+        async: false,
         success: function (data) {
             $("#ddlCity").empty();
             var txt = '';
@@ -156,54 +158,56 @@ function BindGridDataManual(data) {
     $("#tblAdmin").append(txt);
    
 }
-//function BindGridData(data) {
-//    $("#tblBuyer").kendoGrid().empty();
-//    $("#tblBuyer").kendoGrid({
-//        dataSource: {
-//            data: data,
-//            dataType: "json",
-//        },
-//        toolbar: "<a id='btnAddNew' role='button' class='k-button k-button-icontext k-grid-add' href='javascript:void(0)'><span class='k-icon k-i-plus'></span>Add New Record</a>",
-//        columns: [
 
-//            { field: "AdminID", title: "BuyerID", hidden: true, filterable: true },
-//            { field: "Name", title: "Buyer Name", filterable: true },
-//            { field: "Contact", title: "Country Name", filterable: true },
-//            { field: "Address", title: "CM Margin", filterable: true },
-//            //{ field: "AverageCM", title: "Avg CM", filterable: true },
-//            //{ field: "LeadTime", title: "Lead Time", filterable: true },
-//            //{ field: "ExFactoryLead", title: "ExFactory Lead", filterable: true },
-//            //{ field: "PaymentDays", title: "Payment Days", filterable: true },
-//            //{ field: "ExcessShipAllow", title: "Excess Ship Allow (%)", filterable: true },
-//            //{ field: "AllowProductID", title: "Allow Product ID", filterable: true },
-//            {
-//                template: '<a role="button" class="k-button k-button-icontext k-grid-edit" href="javascript:void(0)" onclick=LoadEditData(#=BuyerID#)><span class="k-icon k-i-edit"></span>Edit</a>' +
-//                    '<a role="button" class="k-button k-button-icontext k-grid-delete" style="display:none;" href="javascript:void(0)" onclick=DeleteGridData(#=BuyerID#)><span class="k-icon k-i-close"></span>Delete</a>',
-//                field: "BuyerID",
-//                title: "Action",
-//                width: 170,
-//                headerAttributes: { style: "text-align: center" },
-//                attributes: { class: "text-center" },
-//                filterable: false
-//            },
-//        ],
-//        sortable: true,
-//        filterable: {
-//            extra: false, //do not show extra filters
-//            operators: { // redefine the string operators
-//                string: {
-//                    contains: "Contains",
-//                    startswith: "Starts With",
-//                    eq: "Is Equal To"
-//                }
-//            }
-//        },
-//        resizable: true,
-//        height: 450,
-//        pageable: false,
-//        scrollable: true
-//    });
-//}
+//start bindwithgrid test
+function BindGridData(data) {
+    $("#tblAdmin").kendoGrid().empty();
+    $("#tblAdmin").kendoGrid({
+        dataSource: {
+            data: data,
+            dataType: "json",
+        },
+        toolbar: "<a id='btnAddNew' role='button' class='k-button k-button-icontext k-grid-add' href='javascript:void(0)'><span class='k-icon k-i-plus'></span>Add New Record</a>",
+        columns: [
+
+            { field: "AdminID", title: "Admin", hidden: true, filterable: true },
+            { field: "Name", title: "Name", filterable: true },
+            { field: "Contact", title: "Contact", filterable: true },
+            { field: "Address", title: "Address", filterable: true },
+            { field: "Country", title: "Country", filterable: true },
+            { field: "City", title: "City", filterable: true },
+            
+            {
+                field: "AdminID",
+                template: '<a role="button" class="k-button k-button-icontext k-grid-edit" href="javascript:void(0)" onclick=LoadEditData(#=AdminID#)><span class="k-icon k-i-edit"></span>Edit</a>' +
+                    '<a role="button" class="k-button k-button-icontext k-grid-delete" " href="javascript:void(0)" onclick=DeleteGridData(#=AdminID#)><span class="k-icon k-i-close"></span>Delete</a>',
+                
+                title: "Action",
+                width: 170,
+                headerAttributes: { style: "text-align: center" },
+                attributes: { class: "text-center" },
+                filterable: false
+            },
+        ],
+        sortable: true,
+        filterable: {
+            extra: false, //do not show extra filters
+            operators: { // redefine the string operators
+                string: {
+                    contains: "Contains",
+                    startswith: "Starts With",
+                    eq: "Is Equal To"
+                }
+            }
+        },
+        resizable: true,
+        height: 450,
+        pageable: false,
+        scrollable: true
+    });
+}
+
+//end bindwithgrid test
 function SaveFormValue() {
     var _isError = 0;
     var AdminID = $("#hdAdminID").val();
@@ -249,6 +253,7 @@ function LoadEditData(AdminID) {
         data: JSON.stringify(_dbModel),
         contentType: "application/json",
         datatype: "json",
+        async:true,
         success: function (data) {
             $.each(data, function (i, item) {
                 $("#hdAdminID").val(item.AdminID);
@@ -256,8 +261,10 @@ function LoadEditData(AdminID) {
                 $("#txtContact").val(item.Contact);
                 $("#txtAddress").val(item.Address);
                 $("#ddlCountry").val(item.Country);
-                alert(item.Country);
-                LoadDDLCityData(item.Country);
+                $("#ddlCountry").trigger("change");
+                //LoadDDLCityData(item.Country);
+                //alert(item.City);
+                $("#ddlCity").val(item.City);
                 
                 
             });
